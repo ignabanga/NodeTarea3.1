@@ -9,7 +9,7 @@ if (process.argv.length < 3) {
 const password = process.argv[2]
 
 const url =
-  `mongodb+srv://sebasbanga:${password}@cluster0.2alqxve.mongodb.net/?retryWrites=true&w=majority`
+  `mongodb+srv://sebasbanga:${password}@cluster0.2alqxve.mongodb.net/note-app?retryWrites=true&w=majority`
 
 mongoose.connect(url)
 
@@ -22,12 +22,21 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model('Note', noteSchema)
 
 const note = new Note({
-  content: 'HTML is Easy',
+  content: 'Tercera nota',
   date: new Date(),
-  important: true,
+  important: false,
 })
 
+/*
 note.save().then(result => {
   console.log('note saved!')
   mongoose.connection.close()
 })
+METODO PARA GUARDAR NOTAS
+*/
+Note.find({}).then(result => {
+    result.forEach(note => {
+      console.log(note)
+    })
+    mongoose.connection.close()
+  })
